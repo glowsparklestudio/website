@@ -139,11 +139,11 @@ export default function HomePage() {
       )}
 
       {/* Hero Section */}
-      <section className="relative min-h-[100px] lg:min-h-[100svh] flex items-center justify-start overflow-hidden pt-32 pb-20 lg:pt-20 lg:pb-0">
+      <section className="relative min-h-[100svh] lg:min-h-[100svh] flex items-center justify-start overflow-hidden pt-32 pb-20 lg:pt-0 lg:pb-0">
         {/* Background Image / Video Mock */}
         <div 
           className="absolute inset-0 z-0 bg-cover bg-[center_top]"
-          style={{ backgroundImage: `url("${getOptimizedImageUrl('https://drive.google.com/thumbnail?id=13DCN5S_JYZIoXNBbB07CwLMWtMkeQDJI&sz=w1920')}")` }}
+          style={{ backgroundImage: `url("${getOptimizedImageUrl('https://www.manyavar.com/on/demandware.static/-/Library-Sites-ManyavarSharedLibrary/default/dwac6643ec/Tips-and-Trick-for-Making-Your-Wedding-Makeup-Last-All-Day.jpg')}")` }}
         >
           {/* Overlay to darken and blur */}
           <div className="absolute inset-0 bg-gradient-to-r from-charcoal-900 via-charcoal-900/90 to-charcoal-900/60 backdrop-blur-[4px]"></div>

@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { db } from '../lib/firebase';
-import { doc, getDoc, setDoc, onSnapshot } from 'firebase/firestore';
+import { db, auth } from '../lib/firebase';
+import { doc, setDoc, onSnapshot } from 'firebase/firestore';
+import { signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from 'firebase/auth';
 
 interface MenuSubcategoryItem {
   name: string;
@@ -42,7 +43,7 @@ interface AdminContextType {
   data: AdminData;
   updateData: (newData: Partial<AdminData>) => void;
   isAuthenticated: boolean;
-  login: (email: string) => boolean;
+  login: () => Promise<boolean>;
   logout: () => void;
 }
 
@@ -90,20 +91,29 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
   const [data, setData] = useState<AdminData>(defaultData);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // Load from Firebase on mount
   useEffect(() => {
+    const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
+      if (user && user.email?.toLowerCase() === 'hunnyspace@gmail.com') {
+        setIsAuthenticated(true);
+      } else {
+        setIsAuthenticated(false);
+      }
+    });
+
     const unsub = onSnapshot(doc(db, 'admin', 'data'), (docSnap) => {
       if (docSnap.exists()) {
         setData({ ...defaultData, ...docSnap.data() as Partial<AdminData> });
       } else {
-        // Initialize if not exists
         setDoc(doc(db, 'admin', 'data'), defaultData).catch(console.error);
       }
     }, (error) => {
       console.error('Failed to parse admin data from Firebase', error);
     });
 
-    return () => unsub();
+    return () => {
+      unsubscribeAuth();
+      unsub();
+    };
   }, []);
 
   const updateData = async (newData: Partial<AdminData>) => {
@@ -116,15 +126,28 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const login = (email: string) => {
-    if (email.toLowerCase() === 'hunnyspace@gmail.com') {
-      setIsAuthenticated(true);
-      return true;
+  const login = async () => {
+    try {
+      const provider = new GoogleAuthProvider();
+      provider.setCustomParameters({
+        prompt: 'select_account'
+      });
+      const result = await signInWithPopup(auth, provider);
+      if (result.user.email?.toLowerCase() === 'hunnyspace@gmail.com') {
+        setIsAuthenticated(true);
+        return true;
+      } else {
+        await signOut(auth); // Sign out unauthorized user
+        return false;
+      }
+    } catch (error) {
+       console.error("Login failed", error);
+       return false;
     }
-    return false;
   };
 
-  const logout = () => {
+  const logout = async () => {
+    await signOut(auth);
     setIsAuthenticated(false);
   };
 
