@@ -59,13 +59,7 @@ const navStructure = [
   },
   { 
     name: 'Services', 
-    path: '/services',
-    dropdown: [
-      { name: 'Hair Services', path: '/services#hair' },
-      { name: 'Skin Treatments', path: '/services#skin' },
-      { name: 'Nail Care', path: '/services#nails' },
-      { name: 'Head Massage', path: '/services#massage' }
-    ]
+    path: '/services'
   },
   { 
     name: 'Wedding', 
@@ -102,7 +96,10 @@ function Navbar() {
 
   return (
     <header className="fixed inset-x-0 z-50 transition-all duration-500 flex justify-center top-2 md:top-4">
-      <div className="w-full flex items-center justify-between transition-all duration-500 max-w-[1200px] glass-heavy rounded-2xl md:rounded-full px-4 md:px-6 py-4 md:py-3 border border-white/10 shadow-[0_10px_40px_rgba(0,0,0,0.5)] mx-2 md:mx-4">
+      <div 
+        style={{ WebkitBackdropFilter: 'blur(32px)', backdropFilter: 'blur(32px)', backgroundColor: 'rgba(13, 13, 13, 0.8)' }}
+        className="w-full flex items-center justify-between transition-all duration-500 max-w-[1200px] rounded-2xl md:rounded-full px-4 md:px-6 py-4 md:py-3 border border-white/10 shadow-[0_10px_40px_rgba(0,0,0,0.5)] mx-2 md:mx-4"
+      >
         <Link to="/" className="flex items-center gap-3 group relative z-50">
           <div className="relative flex items-center justify-start transition-all duration-500 h-[60px] w-[180px] md:h-[80px] md:w-[220px] -mt-1 md:-mt-2">
             <img 
@@ -691,10 +688,10 @@ export function Layout() {
         <AnimatePresence mode="wait">
           <motion.div
             key={location.pathname}
-            initial={{ opacity: 0, filter: 'blur(10px)' }}
-            animate={{ opacity: 1, filter: 'blur(0px)' }}
-            exit={{ opacity: 0, filter: 'blur(10px)' }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
             className="w-full h-full"
           >
             <Outlet />
@@ -706,7 +703,10 @@ export function Layout() {
       <ChatWidget />
 
       {/* Mobile Sticky CTA Bar */}
-      <div className="lg:hidden fixed bottom-0 inset-x-0 z-50 glass-heavy border-t border-white/10 grid grid-cols-2 h-16 shadow-[0_-10px_40px_rgba(0,0,0,0.5)]">
+      <div 
+        style={{ WebkitBackdropFilter: 'blur(32px)', backdropFilter: 'blur(32px)', backgroundColor: 'rgba(13, 13, 13, 0.8)' }}
+        className="lg:hidden fixed bottom-0 inset-x-0 z-50 border-t border-white/10 grid grid-cols-2 h-16 shadow-[0_-10px_40px_rgba(0,0,0,0.5)]"
+      >
         <motion.a 
           whileTap={{ scale: 0.95 }}
           href="https://search.google.com/local/writereview?placeid=ChIJ_bi8CBFDOToRdeCICioy0ck" 

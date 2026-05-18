@@ -1,4 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { db } from '../lib/firebase';
+import { doc, getDoc, setDoc, onSnapshot } from 'firebase/firestore';
 
 interface MenuSubcategoryItem {
   name: string;
@@ -88,22 +90,30 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
   const [data, setData] = useState<AdminData>(defaultData);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // Load from local storage on mount
+  // Load from Firebase on mount
   useEffect(() => {
-    const saved = localStorage.getItem('glowSparkleAdminData');
-    if (saved) {
-      try {
-        setData({ ...defaultData, ...JSON.parse(saved) });
-      } catch (e) {
-        console.error('Failed to parse admin data', e);
+    const unsub = onSnapshot(doc(db, 'admin', 'data'), (docSnap) => {
+      if (docSnap.exists()) {
+        setData({ ...defaultData, ...docSnap.data() as Partial<AdminData> });
+      } else {
+        // Initialize if not exists
+        setDoc(doc(db, 'admin', 'data'), defaultData).catch(console.error);
       }
-    }
+    }, (error) => {
+      console.error('Failed to parse admin data from Firebase', error);
+    });
+
+    return () => unsub();
   }, []);
 
-  const updateData = (newData: Partial<AdminData>) => {
+  const updateData = async (newData: Partial<AdminData>) => {
     const updated = { ...data, ...newData };
     setData(updated);
-    localStorage.setItem('glowSparkleAdminData', JSON.stringify(updated));
+    try {
+      await setDoc(doc(db, 'admin', 'data'), updated);
+    } catch (e) {
+      console.error('Failed to update admin data to Firebase', e);
+    }
   };
 
   const login = (email: string) => {

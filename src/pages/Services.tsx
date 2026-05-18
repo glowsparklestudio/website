@@ -570,7 +570,7 @@ export default function ServicesPage() {
                  <h2 className="font-serif text-4xl md:text-5xl mb-4 text-white drop-shadow-md">The Signature Bridal Packages</h2>
                  <p className="text-white/80 font-light text-base md:text-lg">Discover our premium and classic pre-bridal to bridal transformations, meticulously curated for your big day starting at ₹20,999.</p>
               </div>
-              <Link to="/bridal" className="shrink-0">
+              <Link to="/wedding" className="shrink-0">
                  <button className="bg-brand-400 hover:bg-brand-500 text-white shadow-[0_10px_30px_rgba(212,175,55,0.4)] px-8 py-4 rounded-full font-bold uppercase tracking-widest text-xs flex items-center gap-3 transition-colors">
                     Explore Bridal <ArrowRight size={16} />
                  </button>
@@ -623,8 +623,10 @@ export default function ServicesPage() {
              isHighlightingCart ? "scale-105" : ""
            )}
         >
-           <div className={cn(
-             "backdrop-blur-xl border rounded-[999px] p-2 pr-2 flex items-center justify-between gap-4 shadow-[0_15px_40px_rgba(0,0,0,0.5)] transition-colors duration-500 mx-auto",
+           <div 
+             style={{ WebkitBackdropFilter: 'blur(24px)', backdropFilter: 'blur(24px)' }}
+             className={cn(
+             "border rounded-[999px] p-2 pr-2 flex items-center justify-between gap-4 shadow-[0_15px_40px_rgba(0,0,0,0.5)] transition-colors duration-500 mx-auto",
              isHighlightingCart ? "bg-charcoal-800/95 border-brand-400/60 shadow-[0_0_50px_rgba(212,175,55,0.4)]" : "bg-black/80 border-brand-400/30 glow-border"
            )}>
               <div className="flex items-center justify-center gap-3 pl-3 pr-2 shrink-0">

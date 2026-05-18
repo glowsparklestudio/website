@@ -1,0 +1,18 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+  
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    match /admin/{docId} {
+      // Allow read to everyone so the app can display data
+      allow read: if true;
+      // Allow write to everyone for now (since no auth is set up besides the basic email check in the app)
+      allow write: if true;
+    }
+  }
+}

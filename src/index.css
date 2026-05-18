@@ -39,7 +39,7 @@
   }
 
   .glass-heavy {
-    @apply bg-[#0d0d0d]/60 border-b border-[#d4af37]/20 shadow-[0_10px_40px_rgba(0,0,0,0.7)];
+    @apply bg-[#0d0d0d]/80 border-b border-[#d4af37]/20 shadow-[0_10px_40px_rgba(0,0,0,0.7)];
     backdrop-filter: blur(32px);
     -webkit-backdrop-filter: blur(32px);
   }
