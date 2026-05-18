@@ -139,14 +139,14 @@ export default function HomePage() {
       )}
 
       {/* Hero Section */}
-      <section className="relative min-h-[100svh] lg:min-h-[100svh] flex items-center justify-start overflow-hidden pt-32 pb-20 lg:pt-0 lg:pb-0">
+      <section className="relative min-h-[100svh] lg:min-h-[100svh] flex items-center justify-start overflow-hidden pt-20 lg:pt-0 pb-20 lg:pb-0">
         {/* Background Image / Video Mock */}
         <div 
           className="absolute inset-0 z-0 bg-cover bg-[center_top]"
           style={{ backgroundImage: `url("${getOptimizedImageUrl('https://www.manyavar.com/on/demandware.static/-/Library-Sites-ManyavarSharedLibrary/default/dwac6643ec/Tips-and-Trick-for-Making-Your-Wedding-Makeup-Last-All-Day.jpg')}")` }}
         >
           {/* Overlay to darken and blur */}
-          <div className="absolute inset-0 bg-gradient-to-r from-charcoal-900 via-charcoal-900/90 to-charcoal-900/60 backdrop-blur-[4px]"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-charcoal-900 via-charcoal-900/90 to-charcoal-900/60 backdrop-blur-sm"></div>
           <div className="absolute inset-0 bg-black/30"></div>
           
           {/* Ambient gold glow */}
@@ -158,7 +158,7 @@ export default function HomePage() {
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1.2, ease: "easeOut" }}
-            className="max-w-2xl py-20"
+            className="max-w-2xl py-12 lg:py-20"
           >
             <div className="inline-flex items-center justify-center mb-6 glass-heavy px-4 py-1.5 rounded-full border border-brand-400/30">
                <h2 className="text-white uppercase tracking-[0.3em] text-[10px] font-bold text-center">

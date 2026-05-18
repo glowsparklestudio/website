@@ -478,12 +478,12 @@ export default function ServicesPage() {
                           key={sub.displayName || sub.name} 
                           className={cn(
                              "glass-heavy rounded-[2rem] p-8 md:p-10 border border-white/5 transition-colors relative group break-inside-avoid inline-block w-full mb-8 lg:mb-12",
-                             (searchQuery.trim() !== "" || expandedCategories.includes(sub.displayName || sub.name)) ? "hover:border-brand-400/30 hover:bg-white/[0.03]" : "hover:border-brand-400/20 cursor-pointer overflow-hidden"
+                             (searchQuery.trim() !== "" || expandedCategories.includes(sub.displayName || sub.name)) ? "md:hover:border-brand-400/30 md:hover:bg-white/[0.03]" : "md:hover:border-brand-400/20 cursor-pointer overflow-hidden"
                            )}
                            onClick={!(searchQuery.trim() !== "" || expandedCategories.includes(sub.displayName || sub.name)) ? () => setExpandedCategories(prev => [...prev, sub.displayName || sub.name]) : undefined}
                        >
                            <div className={cn("flex items-center justify-between gap-4 cursor-pointer", (searchQuery.trim() !== "" || expandedCategories.includes(sub.displayName || sub.name)) && "mb-2")}>
-                              <h3 className="font-serif text-3xl group-hover:text-brand-400 transition-colors pointer-events-none">
+                              <h3 className="font-serif text-3xl md:group-hover:text-brand-400 transition-colors pointer-events-none">
                                 {sub.displayName || sub.name}
                               </h3>
                               <button 

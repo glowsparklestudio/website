@@ -43,7 +43,7 @@ interface AdminContextType {
   data: AdminData;
   updateData: (newData: Partial<AdminData>) => void;
   isAuthenticated: boolean;
-  login: () => Promise<boolean>;
+  login: () => Promise<{success: boolean, message?: string}>;
   logout: () => void;
 }
 
@@ -126,7 +126,7 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const login = async () => {
+  const login = async (): Promise<{success: boolean, message?: string}> => {
     try {
       const provider = new GoogleAuthProvider();
       provider.setCustomParameters({
@@ -135,14 +135,19 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
       const result = await signInWithPopup(auth, provider);
       if (result.user.email?.toLowerCase() === 'hunnyspace@gmail.com') {
         setIsAuthenticated(true);
-        return true;
+        return { success: true };
       } else {
         await signOut(auth); // Sign out unauthorized user
-        return false;
+        return { success: false, message: `Unauthorized email: ${result.user.email}` };
       }
-    } catch (error) {
+    } catch (error: any) {
        console.error("Login failed", error);
-       return false;
+       return { 
+         success: false, 
+         message: error.message?.includes('auth/unauthorized-domain') 
+           ? "Website URL not authorized in Firebase. Please add this app's URL to Firebase Console > Authentication > Settings > Authorized Domains." 
+           : error.message || "Failed to sign in with Google." 
+       };
     }
   };
 

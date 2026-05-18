@@ -25,9 +25,9 @@ export default function AdminPage() {
               {message && <p className="text-red-400 text-sm">{message}</p>}
               <button 
                 onClick={async () => {
-                  const success = await login();
-                  if (!success) {
-                    setMessage("Unauthorized. Only designated admin can login.");
+                  const res = await login();
+                  if (!res.success) {
+                    setMessage(res.message || "Unauthorized.");
                   }
                 }}
                 className="w-full bg-brand-400 text-black font-bold uppercase tracking-widest py-4 rounded-xl hover:bg-brand-500 transition-colors flex items-center justify-center gap-3">
